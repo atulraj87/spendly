@@ -183,6 +183,63 @@
 .dash-bar-bills  { background: #7b68c8; }
 
 /* ------------------------------------------------------------------ */
+/* Modal                                                               */
+/* ------------------------------------------------------------------ */
+
+/* The full-screen dark backdrop — hidden until .is-open is added */
+.modal-overlay {
+    display: none;
+    position: fixed;       /* stays in place even when page scrolls */
+    inset: 0;              /* shorthand for top/right/bottom/left: 0 — covers the whole viewport */
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 200;          /* sits above the navbar (z-index: 100) */
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+/* Adding this class makes the overlay appear */
+.modal-overlay.is-open {
+    display: flex;
+}
+
+/* The white box that holds the video */
+.modal-box {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 16 / 9;  /* keeps the box the right shape for a video */
+    background: var(--ink);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+}
+
+/* The × button in the top-right corner */
+.modal-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.75rem;
+    z-index: 10;           /* sits above the iframe */
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.modal-close:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* ------------------------------------------------------------------ */
 /* Responsive                                                          */
 /* ------------------------------------------------------------------ */
 

@@ -24,7 +24,7 @@
         </p>
         <div class="hero-actions">
             <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
-            <a href="#" class="btn-primary">See how it works</a>
+            <a href="#" class="btn-primary" id="how-btn">See how it works</a>
         </div>
     </div>
 
@@ -104,4 +104,63 @@
     </div>
 </section>
 
+<!-- ===== "See how it works" modal ===== -->
+<div class="modal-overlay" id="how-modal">
+    <div class="modal-box">
+        <button class="modal-close" id="how-modal-close" aria-label="Close">&#x2715;</button>
+        <iframe
+            id="how-iframe"
+            src=""
+            width="100%"
+            height="100%"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+        ></iframe>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // The YouTube embed URL — replace the video ID when you have the real one
+    var VIDEO_SRC = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
+
+    // Grab every element we need once, up front
+    var howBtn   = document.getElementById("how-btn");
+    var modal    = document.getElementById("how-modal");
+    var closeBtn = document.getElementById("how-modal-close");
+    var iframe   = document.getElementById("how-iframe");
+
+    // openModal: make the overlay visible + load the video
+    function openModal() {
+        iframe.src = VIDEO_SRC;          // setting src here starts the video
+        modal.classList.add("is-open");  // CSS switches display:none → flex
+        document.body.style.overflow = "hidden"; // stop page from scrolling behind modal
+    }
+
+    // closeModal: hide the overlay + STOP the video
+    function closeModal() {
+        iframe.src = "";                    // clearing src kills audio/video instantly
+        modal.classList.remove("is-open"); // CSS switches back to display:none
+        document.body.style.overflow = ""; // restore normal page scroll
+    }
+
+    // Trigger 1: the "See how it works" button
+    howBtn.addEventListener("click", function (e) {
+        e.preventDefault(); // stop the href="#" from jumping the page
+        openModal();
+    });
+
+    // Trigger 2: the × close button inside the box
+    closeBtn.addEventListener("click", closeModal);
+
+    // Trigger 3: clicking the dark backdrop (the overlay itself, NOT the white box)
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) { // only fires when click lands on the overlay, not its children
+            closeModal();
+        }
+    });
+</script>
 {% endblock %}
